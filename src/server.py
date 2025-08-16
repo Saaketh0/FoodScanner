@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-
+from getfood import getfood
 # Create a Flask web server application
 app = Flask(__name__)
 
@@ -23,8 +23,11 @@ def handle_scan():
     else:
         # Send an error response if the data is missing
         return jsonify({"status": "error", "message": "No barcode data provided"}), 400
+    
 
 # Run the server when the script is executed
 if __name__ == '__main__':
     # '0.0.0.0' makes the server accessible from other devices on your network
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=8000)
+
+    

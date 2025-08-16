@@ -40,7 +40,7 @@ export default function Camera() {
       // --- NEW CODE TO SEND DATA TO PYTHON ---
       try {
         // Replace 'YOUR_COMPUTER_IP_ADDRESS' with your computer's actual IP on the network
-        const response = await fetch('http://10.0.0.40:5000/scan', {
+        const response = await fetch('http://10.0.0.40:8000/scan', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -49,9 +49,13 @@ export default function Camera() {
             barcode: barcodeData, // Send the data in a JSON object
           }),
         });
-  
-        const responseJson = await response.json();
-        console.log('Server response:', responseJson); // Log the server's reply
+
+        if (response.ok) {
+          const responseData = await response.json();
+          console.log("Server response:", responseData);
+        } else {
+          console.error("Server error:", response.status, response.statusText);
+        }
   
       } catch (error) {
         console.error("Error sending barcode to server:", error);
