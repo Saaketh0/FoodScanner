@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 type ListContextType = {
   list: string[];
@@ -13,6 +13,10 @@ export const ListProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const addToList = (item: string) => {
     setList((prevList) => [...prevList, item]);
   };
+
+  useEffect(() => {
+    console.log("Shared list updated:", list);
+  }, [list]);
 
   return (
     <ListContext.Provider value={{ list, addToList }}>

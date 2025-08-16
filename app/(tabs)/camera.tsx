@@ -8,8 +8,8 @@ export default function Camera() {
   const [facing, setFacing] = useState<CameraType>('back');
   const [permission, requestPermission] = useCameraPermissions();
   const [scanned, setScanned] = useState(false);
-  const [barcodeData, setBarcodeData] = useState<string | null>(null);
-  const { addToList } = useList(); // Access the addToList function from context
+  const [barcodeNum, setBarcodeNum] = useState<string | null>(null); // renamed variable
+  const { addToList } = useList();
   const router = useRouter();
 
   if (!permission) {
@@ -34,44 +34,34 @@ export default function Camera() {
   async function handleBarCodeScanned(result: BarcodeScanningResult) {
     if (!scanned) {
       setScanned(true);
-      setBarcodeData(result.data); // Store the scanned barcode data
-
+      const barcodeData = result.data; // The scanned barcode number
+      console.log("Barcode scanned:", barcodeData);
+  
+      // --- NEW CODE TO SEND DATA TO PYTHON ---
       try {
-        // Send POST request with barcode data
-        const response = await fetch('https://saakeths.app.n8n.cloud/webhook-test/459d3b39-3067-48a0-97b1-5ff6c9d3e5bb', {
+        // Replace 'YOUR_COMPUTER_IP_ADDRESS' with your computer's actual IP on the network
+        const response = await fetch('http://10.0.0.40:5000/scan', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ barcode: result.data }),
+          body: JSON.stringify({
+            barcode: barcodeData, // Send the data in a JSON object
+          }),
         });
-
-        if (!response.ok) {
-          console.error('Failed to send barcode data:', response.statusText);
-        } else {
-          console.log('Barcode data sent successfully');
-
-
-          // Retrieve and handle the response data
-          const scuffedresponseData = await response.json(); // Parse JSON response
-          const responseData = scuffedresponseData["output"];
-          console.log('Response from webhook:', responseData);
-
-          // Add the response data to the shared list
-          addToList(JSON.stringify(responseData)); // Add the response data as a new item in the list
-
-          router.push('./tracker');
-          
-        }
+  
+        const responseJson = await response.json();
+        console.log('Server response:', responseJson); // Log the server's reply
+  
       } catch (error) {
-        console.error('Error sending barcode data:', error);
+        console.error("Error sending barcode to server:", error);
       }
+      // ------------------------------------
+  
+      // You can still perform your original actions
+      addToList(barcodeData);
+      router.push('/tracker');
     }
-  }
-
-  function resetScanner() {
-    setScanned(false);
-    setBarcodeData(null);
   }
 
   return (
@@ -79,17 +69,11 @@ export default function Camera() {
       <CameraView
         style={styles.camera}
         facing={facing}
-        onBarcodeScanned={scanned ? undefined : handleBarCodeScanned} // Disable scanning after a successful scan
+        onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
       />
       <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
         <Text style={styles.buttonText}>Flip Camera</Text>
       </TouchableOpacity>
-      {barcodeData && (
-        <View style={styles.resultContainer}>
-          <Text style={styles.resultText}>Scanned Data: {barcodeData}</Text>
-          <Button title="Scan Again" onPress={resetScanner} />
-        </View>
-      )}
     </View>
   );
 }
@@ -112,17 +96,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 16,
-  },
-  resultContainer: {
-    position: 'absolute',
-    bottom: 100,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    padding: 10,
-    borderRadius: 5,
-  },
-  resultText: {
     color: '#fff',
     fontSize: 16,
   },

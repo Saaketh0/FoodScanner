@@ -19,6 +19,7 @@ export default function Tracker() {
 
   const { list, addToList } = useList(); // Access the shared list and method
 
+
   const handleAddToList = () => {
     if (inputText.trim()) {
       addToList(inputText.trim()); // Use the shared context method
@@ -28,6 +29,7 @@ export default function Tracker() {
   };
 
   return (
+    
     <View style={styles.container}>
       {/* Top Bar */}
       <View style={styles.topBar}>
@@ -41,8 +43,7 @@ export default function Tracker() {
           <Text style={styles.macroText}>Carbs: {carbs}/{goalcarbs} g</Text>
           <Text style={styles.macroText}>Fats: {fats}/{goalfats} g</Text>
         </View>
-      </View>
-
+      </View>  
       {/* List Section */}
       <View style={styles.listContainer}>
         <Text style={styles.listTitle}>Food Eaten Today</Text>
@@ -52,10 +53,7 @@ export default function Tracker() {
 
 
 
-          //protein = {list["Protein Count"]}
-
-
-          
+        
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => <Text style={styles.listItem}>{item}</Text>}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
