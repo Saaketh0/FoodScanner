@@ -1,50 +1,70 @@
-# Welcome to your Expo app 👋
+# FoodScan Frontend
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A minimal React Native/Expo app for food tracking and nutrition management.
 
-## Get started
+## Project Structure
 
-1. Install dependencies
+```
+frontend/
+├── app/                    # Main app screens and navigation
+│   ├── (tabs)/            # Tab-based navigation
+│   │   ├── index.tsx      # Home screen
+│   │   ├── explore.tsx    # Features overview
+│   │   ├── camera.tsx     # Camera scanner (placeholder)
+│   │   ├── tracker.tsx    # Calorie and macro tracker
+│   │   └── _layout.tsx    # Tab navigation layout
+│   ├── _layout.tsx        # Root app layout
+│   ├── listcontext.tsx    # Shared state for food list
+│   └── +not-found.tsx     # 404 page
+├── assets/                 # Images and fonts
+├── package.json            # Dependencies and scripts
+├── app.json               # Expo configuration
+└── tsconfig.json          # TypeScript configuration
+```
 
+## Getting Started
+
+1. **Install dependencies:**
    ```bash
    npm install
    ```
 
-2. Start the app
-
+2. **Start the development server:**
    ```bash
-   npx expo start
+   npm start
    ```
 
-In the output, you'll find options to open the app in a
+3. **Run on specific platform:**
+   ```bash
+   npm run ios      # iOS simulator
+   npm run android  # Android emulator
+   npm run web      # Web browser
+   ```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## What's Included
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- **Basic tab navigation** with 4 main screens
+- **Home screen** with project information
+- **Explore screen** showing app features
+- **Camera screen** (placeholder for future barcode scanning)
+- **Tracker screen** for logging food items and tracking nutrition
+- **Shared state management** using React Context
+- **Clean, modern UI** with consistent styling
 
-## Get a fresh project
+## Next Steps
 
-When you're ready, run:
+This is a minimal foundation. You can now:
+- Implement actual camera functionality
+- Add barcode scanning
+- Integrate with nutrition APIs
+- Enhance the UI with custom components
+- Add data persistence
+- Implement user authentication
 
-```bash
-npm run reset-project
-```
+## Dependencies
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Only essential packages are included:
+- Expo SDK 53
+- React Native 0.79.5
+- Expo Router for navigation
+- Basic styling and layout components

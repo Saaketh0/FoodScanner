@@ -9,14 +9,23 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app needs access to your camera to scan food barcodes.",
+        "NSMicrophoneUsageDescription": "This app needs access to your microphone for video recording."
+      },
+      "bundleIdentifier": "com.anonymous.frontend"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.anonymous.frontend"
     },
     "web": {
       "bundler": "metro",
@@ -33,10 +42,15 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "This app needs access to your camera to scan food barcodes.",
+          "enableMicrophonePermission": true,
+          "microphonePermissionText": "This app needs access to your microphone for video recording."
+        }
       ]
-    ],
-    "experiments": {
-      "typedRoutes": true
-    }
+    ]
   }
 }

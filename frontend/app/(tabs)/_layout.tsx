@@ -1,45 +1,51 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform } from 'react-native';
-
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { ListProvider } from './listcontext';
+import { FONTS } from '../constants/fonts';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
+    <ListProvider>
+      <Tabs
+        initialRouteName="tracker"
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: {
+            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            borderTopWidth: 0,
+            elevation: 10,
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: -4 },
+            shadowOpacity: 0.08,
+            shadowRadius: 6,
+            height: 80,
+            paddingBottom: 0,
+            paddingTop: -50,
           },
-          default: {},
-        }),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
+          tabBarActiveTintColor: '#007AFF',
+          tabBarInactiveTintColor: 'rgba(0, 0, 0, 0.5)',
+          tabBarLabelStyle: {
+            fontSize: 16,
+            fontWeight: '600',
+            letterSpacing: 0.5,
+            fontFamily: FONTS.semiBold,
+          },
+        }}>
+        <Tabs.Screen
+          name="camera"
+          options={{
+            title: 'Scan',
+            tabBarIcon: () => null,
+          }}
+        />
+        <Tabs.Screen
+          name="tracker"
+          options={{
+            title: 'Tracker',
+            tabBarIcon: () => null,
+          }}
+        />
+      </Tabs>
+    </ListProvider>
   );
 }
