@@ -4,12 +4,16 @@ import numpy as np
 from pathlib import Path
 from datasets import load_from_disk
 import torch
-from food_cache import FoodCache
+from src.food_cache import FoodCache
+
+# Resolve paths relative to backend root
+backend_root = Path(__file__).parent.parent
+embeddings_dir = backend_root / "embeddings"
 
 # Load the dataset and model
-loaded_dataset = load_from_disk('embeddings/total_dataset') # Total dataset
+loaded_dataset = load_from_disk(str(embeddings_dir / 'total_dataset')) # Total dataset
 model = SentenceTransformer("all-MiniLM-L6-v2")
-embeds = np.load('embeddings/embeddings_only.npy') # Only embeddings
+embeds = np.load(str(embeddings_dir / 'embeddings_only.npy')) # Only embeddings
 
 # Initialize cache
 food_cache = FoodCache()
@@ -73,3 +77,5 @@ if __name__ == "__main__":
     print(f"Product: {result[0]}")
     print(f"Nutriments: {result[1]}")
     print(f"Similarity: {result[2]:.2f}")
+
+

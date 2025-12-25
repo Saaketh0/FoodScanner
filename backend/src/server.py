@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from food_lookup import lookup
-from analysemacro import analyse_macro
+from src.food_lookup import lookup
+from src.analysemacro import analyse_macro
 
 app = Flask(__name__)
 CORS(app)
@@ -69,3 +69,5 @@ if __name__ == '__main__':
     print("Available at: http://localhost:8000")
     
     app.run(host='10.0.0.40', port=8000, debug=True)
+
+

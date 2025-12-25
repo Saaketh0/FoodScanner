@@ -7,3 +7,4 @@ torch
 datasets
 numpy
 pandas
+rapidfuzz

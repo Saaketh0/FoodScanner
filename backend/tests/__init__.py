@@ -1,0 +1,5 @@
+"""
+FoodScanner backend tests package.
+"""
+
+
